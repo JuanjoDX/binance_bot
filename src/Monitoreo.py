@@ -61,6 +61,8 @@ while True:
     yellow_background = "\033[43m"
     reset_style = "\033[0m"
 
+    precio_entrada = client.futures_position_information(symbol = target_status["symbol"])[0]['entryPrice']
+
     if aux == "SHORT":
         red_background = "\033[42m"
         green_background= "\033[41m"
@@ -70,13 +72,13 @@ while True:
         print("Moneda:", target_status["symbol"])
         print("Tipo:" , aux)
         
-        print("Precio Entrada:" , f"{blue_background}{target_status['avgPrice']}{reset_style}")
+        print("Precio Entrada:" , f"{blue_background}{precio_entrada}{reset_style}")
         
         res = client.futures_symbol_ticker(symbol = target_status["symbol"])
         fecha = datetime.fromtimestamp(res["time"]/1000).strftime("%d/%m/%Y %H:%M:%S")
         precio = res["price"]
 
-        if precio < target_status['avgPrice']:
+        if precio < precio_entrada:
             print("Precio Actual: ", f"{red_background}{precio}{reset_style}")
         else:
             print("Precio Actual: ", f"{green_background}{precio}{reset_style}")

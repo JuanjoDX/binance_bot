@@ -61,7 +61,14 @@ while True:
     yellow_background = "\033[43m"
     reset_style = "\033[0m"
 
-    precio_entrada = client.futures_position_information(symbol = target_status["symbol"])[0]['entryPrice']
+    while True:
+        try:
+            precio_entrada = client.futures_position_information(symbol = target_status["symbol"])[0]['entryPrice']
+            break
+        
+        except BinanceAPIException as e:
+            # Espera 5 segundos antes de intentar nuevamente
+            time.sleep(5)
 
     if aux == "SHORT":
         red_background = "\033[42m"

@@ -90,7 +90,7 @@ while (TRUE) {
   
   # Imprime el tiempo total
   print(tiempo_total)
-
+  
   df <- fread2("C:/Users/Usuario/Proyectos/Bot Trading/data/data_shibusdt_1m.csv",sep = ",")
   
   df["precio_medio"] <- (df$Open+df$Close)/2
@@ -116,9 +116,9 @@ while (TRUE) {
     geom_line(aes(`Open Time`, SMA30), color = "cyan",size = 1.2) +
     geom_point(data = decision, aes(x = fila, y = precio, color = decision), pch = 16,size = 3) +
     scale_color_manual(values = c("LONG" = "green", "SHORT" = "red","SALIR" = "#FF7F24"))
-    # geom_line(aes(`Open Time`, SMA60), color = "gray",size = 1.2)+
-    # geom_line(aes(`Open Time`, SMA120), color = "yellow",size = 1.2)+
-    # geom_line(aes(`Open Time`, SMA240), color = "salmon",size = 1.2)
+  # geom_line(aes(`Open Time`, SMA60), color = "gray",size = 1.2)+
+  # geom_line(aes(`Open Time`, SMA120), color = "yellow",size = 1.2)+
+  # geom_line(aes(`Open Time`, SMA240), color = "salmon",size = 1.2)
   p_interactivo <- ggplotly(p)
   print(p)
 }

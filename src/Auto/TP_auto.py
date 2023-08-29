@@ -1,9 +1,10 @@
 ### Importar Librerias
 from binance import Client
-import time
+from binance.exceptions import BinanceAPIException
+import time 
 import SL_auto as sl
 
-def tp_auto(orden):
+def tp_auto(orden,ganancia,perdida,porcentaje_ts):
     ### id de la orden
     orderid = orden["orderId"]
     simbolo = orden["symbol"]
@@ -24,10 +25,16 @@ def tp_auto(orden):
 
         if status == "FILLED":
             ### Posición Actual
-            pos_act = client.futures_position_information(symbol = orden_act["symbol"])[0]
+            while True:
+                try:
+                    pos_act = client.futures_position_information(symbol = orden["symbol"])[0]
+                    break
+                except BinanceAPIException as e:
+                    # Espera 0.2 segundos antes de intentar nuevamente
+                    time.sleep(0.2)
 
             ### TP Limit Según lado
-            roe = 7
+            roe = ganancia
 
             aux = None
             decimas = len(orden_act["price"].split(".")[1])
@@ -35,18 +42,26 @@ def tp_auto(orden):
             if orden_act["side"] == "SELL":
                 aux = "BUY"
                 precio_salida = str(round(float(pos_act["entryPrice"])*(1-(roe/(100*palanca))),decimas))
+                precio_act_tsl = str(round(float(pos_act["entryPrice"])*(1-(roe*porcentaje_ts/(100*palanca))),decimas))
             else:
                 aux = "SELL"
                 precio_salida = str(round(float(pos_act["entryPrice"])*(1+(roe/(100*palanca))),decimas))
+                precio_act_tsl = str(round(float(pos_act["entryPrice"])*(1+(roe*porcentaje_ts/(100*palanca))),decimas))                
 
             ### Crear Orden TP
-            orden_salida = client.futures_create_order(symbol = orden_act["symbol"],
+            while True:
+                try:
+                    orden_salida = client.futures_create_order(symbol = orden_act["symbol"],
                                         side = aux,
                                         price = precio_salida,
                                         quantity = abs(int(pos_act["positionAmt"])),
                                         type = 'LIMIT',
                                         timeinforce = 'GTC',
                                         reduceOnly = True)
+                    break
+                except BinanceAPIException as e:
+                    # Espera 0.2 segundos antes de intentar nuevamente
+                    time.sleep(0.2)
 
             ### Imprimir Ganancia
             total_salida = float(orden_salida["price"])*float(orden_salida["origQty"])
@@ -55,8 +70,8 @@ def tp_auto(orden):
             comision = total_salida*0.0002 + total_entrada*0.0002 
             ganancia_neta = abs(ganancia-comision)
             print("La ganancia es aproximandamente:", round(ganancia_neta,2))
-            sl.sl_auto(orden_act)
-            break
+            return(sl.sl_auto(orden_act,perdida),precio_act_tsl,aux)
+        
         elif c == 120:
             print("Se cancela la orden")
             client.futures_cancel_all_open_orders(symbol = orden_act["symbol"])

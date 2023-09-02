@@ -6,17 +6,17 @@ from binance.exceptions import BinanceAPIException
 from binance import Client
 import time
 
-#orden = ca.compra_auto("1000SHIBUSDT","SELL",leverage = 50,price_entry=0.008198)
-#orden = ca.compra_auto("1000SHIBUSDT","BUY",leverage = 1,price_entry=0.008040)
-
-orden = {"orderId": "13585083445","symbol" : "1000SHIBUSDT"}
-orden_sl, precio_act_tsl, lado = tp.tp_auto(orden,ganancia = 27,perdida = 50,porcentaje_ts = 0.3)
-print("Precio activación Trailing Stop:",precio_act_tsl)
-
 ### API KEY y Cliente
 apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
 secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
 client = Client(apikey, secret)
+
+#orden = ca.compra_auto("1000SHIBUSDT","SELL",leverage = 50,price_entry=0.007880)
+#orden = ca.compra_auto("1000SHIBUSDT","BUY",leverage = 50,price_entry=0.007975)
+
+orden = {"orderId": "13643033800","symbol" : "1000SHIBUSDT"}
+orden_sl, precio_act_tsl, lado = tp.tp_auto(client,orden,ganancia = 27,perdida = 50,porcentaje_ts = 0.3)
+print("Precio activación Trailing Stop:",precio_act_tsl)
 
 while True:
     try:
@@ -27,7 +27,7 @@ while True:
 
     if lado == "BUY":
         if precio_actual < float(precio_act_tsl):
-            sl.sl_auto(orden,orden_sl,porcentaje_retorno = 3)
+            sl.sl_auto(client,orden,orden_sl,porcentaje_retorno = 10)
     else:
         if precio_actual > float(precio_act_tsl):
-            sl.sl_auto(orden,orden_sl,porcentaje_retorno = 3)
+            sl.sl_auto(client,orden,orden_sl,porcentaje_retorno = 10)

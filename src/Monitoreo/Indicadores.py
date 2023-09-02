@@ -11,6 +11,9 @@ def indicadores(df,t):
         df["RSI9"] = ta.rsi(df["Close"], length=9).shift(1)
         df["RSI14"] = ta.rsi(df["Close"], length=14).shift(1)
         df["RSI25"] = ta.rsi(df["Close"], length=25).shift(1)
+        psar_res = ta.psar(high=df["High"], low=df["Low"], close=df["Close"])
+        df["PSAR"] = psar_res["PSARl_0.02_0.2"].fillna(psar_res["PSARs_0.02_0.2"])
+        
         return(df)
     elif t == "3m":
         df["HMA5"] = ta.hma(df['Close'], length=5).shift(1)
@@ -22,6 +25,8 @@ def indicadores(df,t):
         df["RSI9"] = ta.rsi(df["Close"], length=9).shift(1)
         df["RSI14"] = ta.rsi(df["Close"], length=14).shift(1)
         df["RSI25"] = ta.rsi(df["Close"], length=25).shift(1)
+        psar_res = ta.psar(high=df["High"], low=df["Low"], close=df["Close"])
+        df["PSAR"] = psar_res["PSARl_0.02_0.2"].fillna(psar_res["PSARs_0.02_0.2"])
         return(df)
     
     elif t == "5m":
@@ -34,4 +39,6 @@ def indicadores(df,t):
         df["RSI9"] = ta.rsi(df["Close"], length=9).shift(1)
         df["RSI14"] = ta.rsi(df["Close"], length=14).shift(1)
         df["RSI25"] = ta.rsi(df["Close"], length=25).shift(1)
+        psar_res = ta.psar(high=df["High"], low=df["Low"], close=df["Close"])
+        df["PSAR"] = psar_res["PSARl_0.02_0.2"].fillna(psar_res["PSARs_0.02_0.2"])
         return(df)

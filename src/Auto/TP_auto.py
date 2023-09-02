@@ -4,15 +4,10 @@ from binance.exceptions import BinanceAPIException
 import time 
 import SL_auto as sl
 
-def tp_auto(orden,ganancia,perdida,porcentaje_ts):
+def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
     ### id de la orden
     orderid = orden["orderId"]
     simbolo = orden["symbol"]
-
-    ### API KEY y Cliente
-    apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
-    secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-    client = Client(apikey, secret)
 
     ### Traer orden actualizada
     orden_act = client.futures_get_order(symbol = simbolo,
@@ -70,7 +65,7 @@ def tp_auto(orden,ganancia,perdida,porcentaje_ts):
             comision = total_salida*0.0002 + total_entrada*0.0002 
             ganancia_neta = abs(ganancia-comision)
             print("La ganancia es aproximandamente:", round(ganancia_neta,2))
-            return(sl.sl_auto(orden_act,perdida),precio_act_tsl,aux)
+            return(sl.sl_auto(client,orden_act,perdida),precio_act_tsl,aux)
         
         elif c == 120:
             print("Se cancela la orden")

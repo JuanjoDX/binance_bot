@@ -3,12 +3,7 @@ from binance import Client
 from binance.exceptions import BinanceAPIException
 import time
 
-def sl_auto(orden,perdida):
-
-    ### API KEY y Cliente
-    apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
-    secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-    client = Client(apikey, secret)
+def sl_auto(client,orden,perdida):
 
     ### Posicion actual
     while True:
@@ -18,7 +13,6 @@ def sl_auto(orden,perdida):
         except BinanceAPIException as e:
             # Espera 0.2 segundos antes de intentar nuevamente
             time.sleep(0.2)
-    
 
     ### TP Limit Según lado
     roe = perdida

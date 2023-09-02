@@ -3,18 +3,14 @@ from binance import Client
 from binance.exceptions import BinanceAPIException
 import time 
 
-def sl_auto(orden,orden_sl,porcentaje_retorno):
+def sl_auto(client,orden,orden_sl,porcentaje_retorno):
+    
     roe = porcentaje_retorno
     orderid = orden["orderId"]
     simbolo = orden["symbol"]
 
     orderid_sl = orden_sl["orderId"]
     simbolo_sl = orden_sl["symbol"]
-
-    ### API KEY y Cliente
-    apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
-    secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-    client = Client(apikey, secret)
 
     ### Traer orden actualizada
     orden_act = client.futures_get_order(symbol = simbolo,

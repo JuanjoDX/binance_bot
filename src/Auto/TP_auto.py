@@ -12,6 +12,8 @@ def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
     ### Traer orden actualizada
     orden_act = client.futures_get_order(symbol = simbolo,
                                    orderId = orderid)
+    
+    client.futures_cancel_all_open_orders(symbol = simbolo)
 
     c = 0
     while c <= 120:

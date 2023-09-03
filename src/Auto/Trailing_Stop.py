@@ -30,9 +30,7 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
             time.sleep(0.2)
     
 
-    ### TP Limit Según lado
-
-    aux = None
+    ### Decimales y Palanca
     decimas = len(orden_act["price"].split(".")[1])
     palanca = int(pos_act["leverage"])
 
@@ -44,13 +42,14 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
             # Espera 0.2 segundos antes de intentar nuevamente
             time.sleep(0.2)
 
-        if len(posicion) > 0:
+        if abs(float(posicion[0]["positionAmt"])) > 0:
             try:
                 precio_actual = client.futures_ticker(symbol = orden_act["symbol"])["lastPrice"]
             except BinanceAPIException as e:
                 # Espera 0.2 segundos antes de intentar nuevamente
                 time.sleep(0.2)
-
+            
+            ### Precio Limit Según lado
             if orden_act["side"] == "SELL":
                 aux = "BUY"
                 precio_salida = (round(float(precio_actual)*(1+(roe/(100*palanca))),decimas))
@@ -72,8 +71,9 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
                                                             reduceOnly = True)
                     
                     orden_act_sl = client.futures_get_order(symbol = orden_salida["symbol"],
-                                    orderId = orden_salida["orderId"])
+                                                            orderId = orden_salida["orderId"])
 
+                    ### se debe tener nuevamente la orderId de la nueva posicion 
                     orderid_sl = orden_act_sl["orderId"]
                     simbolo_sl = orden_act_sl["symbol"]
 
@@ -90,15 +90,14 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
                                                             reduceOnly = True)
                     
                     orden_act_sl = client.futures_get_order(symbol = orden_salida["symbol"],
-                                    orderId = orden_salida["orderId"])
-
+                                                            orderId = orden_salida["orderId"])
+                    
+                    ### se debe tener nuevamente la orderId de la nueva posicion 
                     orderid_sl = orden_act_sl["orderId"]
                     simbolo_sl = orden_act_sl["symbol"]
 
             print("Reevaluando")
-            try:
-                posicion = client.futures_position_information(symbol = orden_act["symbol"])
-            except BinanceAPIException as e:
-                # Espera 0.2 segundos antes de intentar nuevamente
-                time.sleep(0.2)
             time.sleep(1)
+
+        else:
+            break

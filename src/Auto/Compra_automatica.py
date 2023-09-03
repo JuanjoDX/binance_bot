@@ -5,11 +5,12 @@ import time
 from binance.exceptions import BinanceAPIException
 import math
 
-def compra_auto(simbolo, tipo, price_entry, leverage = 10):
+def compra_auto(simbolo, tipo, price_entry, leverage = 10, porcentaje_usdt = 1):
     ### simbolo: moneda
     ### tipo: Compra(BUY) o Venta (SELL)
     ### leverage: apalancamiento
     ### price_entry: precio entrada
+    ### porcentaje_usdt: cantidad del todal de usdt colocar en la posición
 
     ### API KEY y Cliente
     apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
@@ -35,12 +36,12 @@ def compra_auto(simbolo, tipo, price_entry, leverage = 10):
             time.sleep(0.2)
 
     ### Orden Operación
-    total_usdt = round(float(target["balance"]),2) - 0.01
+    total_usdt = (round(float(target["balance"]),2) - 0.01)*porcentaje_usdt
     cantidad_monedas = round((total_usdt*leverage/price_entry)//1)
 
     ### Modificar palanca 
     client.futures_change_leverage(symbol=simbolo, leverage=leverage)
-
+    
     ### Mandar Orden
     orden_compra = client.futures_create_order(symbol = simbolo,
                                 side = tipo,

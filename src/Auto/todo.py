@@ -3,13 +3,13 @@ import Compra_automatica as ca
 import TP_auto as tp
 import Trailing_Stop as sl
 from binance.exceptions import BinanceAPIException
-from binance import Client
+from binance import client
 import time
 
 ### API KEY y Cliente
 apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
 secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-client = Client(apikey, secret)
+client = client(apikey, secret)
 
 #orden = ca.compra_auto("1000SHIBUSDT","SELL",leverage = 50,price_entry=0.007880)
 #orden = ca.compra_auto("1000SHIBUSDT","BUY",leverage = 50,price_entry=0.007824)

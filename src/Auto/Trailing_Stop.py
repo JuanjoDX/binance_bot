@@ -61,7 +61,7 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
             ### Crear Orden Trailing SL
             if orden_act["side"] == "SELL":
                 if precio_salida_actual > precio_salida:
-                    print("paso")
+                    
                     client.futures_cancel_order(orderId = orderid_sl, symbol = simbolo_sl)
                     orden_salida = client.futures_create_order(symbol = orden_act["symbol"],
                                                             side = aux,
@@ -79,7 +79,7 @@ def sl_auto(client,orden,orden_sl,porcentaje_retorno):
 
             else:
                 if precio_salida_actual < precio_salida:
-                    print("paso")
+                    
                     client.futures_cancel_order(orderId = orderid_sl, symbol = simbolo_sl)
                     orden_salida = client.futures_create_order(symbol = orden_act["symbol"],
                                                             side = aux,

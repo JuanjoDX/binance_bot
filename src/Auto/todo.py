@@ -12,10 +12,10 @@ secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
 client = Client(apikey, secret)
 
 #orden = ca.compra_auto("1000SHIBUSDT","SELL",leverage = 50,price_entry=0.007880)
-#orden = ca.compra_auto("1000SHIBUSDT","BUY",leverage = 50,price_entry=0.007975)
+#orden = ca.compra_auto("1000SHIBUSDT","BUY",leverage = 50,price_entry=0.007824)
 
-orden = {"orderId": "13643033800","symbol" : "1000SHIBUSDT"}
-orden_sl, precio_act_tsl, lado = tp.tp_auto(client,orden,ganancia = 27,perdida = 50,porcentaje_ts = 0.3)
+orden = {"orderId": "13651856025","symbol" : "1000SHIBUSDT"}
+orden_sl, precio_act_tsl, lado = tp.tp_auto(client,orden,ganancia = 27,perdida = 50,porcentaje_ts = 0.6)
 print("Precio activación Trailing Stop:",precio_act_tsl)
 
 while True:

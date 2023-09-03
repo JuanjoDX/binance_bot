@@ -56,7 +56,7 @@ while True:
         except BinanceAPIException as e:
             # Espera 0.5 segundos antes de intentar nuevamente
             time.sleep(0.5)
-
+    
     ### Tipo de Compra
     aux = None
     if pos_tp["side"] == "SELL":

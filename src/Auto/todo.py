@@ -5,11 +5,10 @@ import Trailing_Stop as sl
 from binance.exceptions import BinanceAPIException
 from binance import Client
 import time
+import config as cf
 
-### API KEY y Cliente
-apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
-secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-client = Client(apikey, secret)
+### Iniciar Cliente
+client = Client(cf.apikey, cf.secret)
 
 ### Colocar Orden de Compra o Venta
 orden = ca.compra_auto("1000SHIBUSDT","SELL", leverage = 50, price_entry=0.007880, porcentaje_usdt = 1)

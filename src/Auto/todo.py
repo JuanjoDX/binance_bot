@@ -1,7 +1,7 @@
 ### Importar Programas
 import Compra_automatica as ca
 import TP_auto as tp
-import Trailing_Stop as sl
+import Trailing_Stop as tsl
 from binance.exceptions import BinanceAPIException
 from binance import Client
 import time
@@ -11,8 +11,8 @@ import config as cf
 client = Client(cf.apikey, cf.secret)
 
 ### Colocar Orden de Compra o Venta
-#orden = ca.compra_auto("1000SHIBUSDT","SELL", leverage = 50, price_entry=0.007880, porcentaje_usdt = 1)
-#orden = ca.compra_auto("1000SHIBUSDT","BUY", leverage = 50, price_entry=0.007824, porcentaje_usdt = 1)
+#orden = ca.compra_auto(client, "1000SHIBUSDT","SELL", leverage = 50, price_entry=0.007880, porcentaje_usdt = 1)
+#orden = ca.compra_auto(client, "1000SHIBUSDT","BUY", leverage = 50, price_entry=0.007824, porcentaje_usdt = 1)
 
 ### Activar Programa dada la orderId
 # orden = {"orderId": "13657983712","symbol" : "1000SHIBUSDT"}
@@ -29,9 +29,9 @@ while True:
 
     if lado == "BUY":
         if precio_actual < float(precio_act_tsl):
-            sl.sl_auto(client,orden,orden_sl,porcentaje_retorno = 10)
+            tsl.tsl_auto(client,orden,orden_sl,porcentaje_retorno = 10)
             break
     else:
         if precio_actual > float(precio_act_tsl):
-            sl.sl_auto(client,orden,orden_sl,porcentaje_retorno = 10)
+            tsl.tsl_auto(client,orden,orden_sl,porcentaje_retorno = 10)
             break

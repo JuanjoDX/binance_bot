@@ -5,18 +5,14 @@ import time
 from binance.exceptions import BinanceAPIException
 import math
 
-def compra_auto(simbolo, tipo, price_entry, leverage = 10, porcentaje_usdt = 1):
+def compra_auto(client, simbolo, tipo, price_entry, leverage = 10, porcentaje_usdt = 1):
     ### simbolo: moneda
     ### tipo: Compra(BUY) o Venta (SELL)
     ### leverage: apalancamiento
     ### price_entry: precio entrada
     ### porcentaje_usdt: cantidad del todal de usdt colocar en la posición
 
-    ### API KEY y Cliente
-    apikey = 'o4xp0nX8Nr3RsQIAQDBs7ZZivwpoLHPZsDQU48dmWX8heBKpSgPOS0M9NZwHHbEP'
-    secret = 'OwjJSwLt0szX7qq62Xqd7evsc345eCLCTrYIVTdIND4HORYJ4DDz7lmGnDGCMiwq'
-    client = Client(apikey, secret)
-
+    ### Cancela cualquier orden abierta
     client.futures_cancel_all_open_orders(symbol = simbolo)
     
     ### Traer Balance USDT de la cuenta
@@ -49,5 +45,6 @@ def compra_auto(simbolo, tipo, price_entry, leverage = 10, porcentaje_usdt = 1):
                                 quantity = cantidad_monedas,
                                 type = 'LIMIT',
                                 timeinforce = 'GTC')
+    ### Imprime y devuelve la orden de compra
     print(orden_compra)
     return(orden_compra)

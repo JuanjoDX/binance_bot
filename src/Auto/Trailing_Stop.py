@@ -3,7 +3,7 @@ from binance import Client
 from binance.exceptions import BinanceAPIException
 import time 
 
-def sl_auto(client,orden,orden_sl,porcentaje_retorno):
+def tsl_auto(client,orden,orden_sl,porcentaje_retorno):
     
     roe = porcentaje_retorno
     orderid = orden["orderId"]

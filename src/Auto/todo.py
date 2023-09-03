@@ -11,7 +11,7 @@ import config as cf
 client = Client(cf.apikey, cf.secret)
 
 ### Colocar Orden de Compra o Venta
-orden = ca.compra_auto("1000SHIBUSDT","SELL", leverage = 50, price_entry=0.007880, porcentaje_usdt = 1)
+#orden = ca.compra_auto("1000SHIBUSDT","SELL", leverage = 50, price_entry=0.007880, porcentaje_usdt = 1)
 #orden = ca.compra_auto("1000SHIBUSDT","BUY", leverage = 50, price_entry=0.007824, porcentaje_usdt = 1)
 
 ### Activar Programa dada la orderId

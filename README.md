@@ -5,7 +5,7 @@ Este programa es un Bot para colocar Take Profit, Stop Loss y Trailing Stop de u
 ## Auto 
 El programa principal es todo.py en el cual se definen las siguientes ordenes así:
 
-## Orden Compra
+### Orden Compra
 Coloca la orden de compra o venta.
 
 - client: Conexión con la API Binance
@@ -15,11 +15,11 @@ Coloca la orden de compra o venta.
 - price_entry: Precio entrada
 - porcentaje_usdt: Cantidad del todal de usdt colocar en la posición (default 1)
 
-### Resultado
+#### Resultado
 Esta función devuelve:
 orden_compra: Orden de compra 
 
-## Orden Take Profit
+### Orden Take Profit
 Coloca la orden de Take Profit en donde se necesitan los siguientes párametros:
 
 - client: Conexión con la API Binance
@@ -34,13 +34,13 @@ Además coloca la orden de __Stop Loss__ en donde se necesitan los siguientes p�
 - orden: Posición activa en donde se quiere colocar el TP y SL
 - perdida: ROE(en porcentaje) de pérdida
 
-### Resultado
+#### Resultado
 Esta función devuelve:
 - orden_sl: Orden del Stop Loss
 - precio_act_tsl: Precio de activación de Trailing Stop
 - lado: Compra(BUY) o Venta(SELL) 
 
-## Orden Trailing Stop
+### Orden Trailing Stop
 Coloca la orden de Stop Loss y la va actualizando, necesitan los siguientes párametros:
 - client: Conexión con la API Binance
 - orden: Posición activa en donde se quiere colocar el TP y SL
@@ -51,13 +51,13 @@ Para ejecutar el programa se debe activar el entorno virtual, crear un archivo d
 
 Si ya se tiene la posición activa se comentan las líneas de compra o venta y se pasa un diccionario con __orderId__ y __symbol__.
 
-### Resultado
+#### Resultado
 El programa imprime 3 indicadores: la ganancia del Take Profit, la pérdida del Stop Loss y el Precio de Activación de Trailing Stop.
 
-## Monitoreo 
+### Monitoreo 
 El monitoreo es un programa para observar la posición activa con su Precio de Entrada, Precio Actual, Take Profit y Stop Loss.
 
-### Resultado 
+#### Resultado 
 El monitoreo imprime los siguientes indicadores de una posición abierta: 
 - Criptomoneda
 - Tipo de Compra: LONG O SHORT

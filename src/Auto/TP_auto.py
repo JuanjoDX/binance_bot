@@ -5,22 +5,24 @@ import time
 import SL_auto as sl
 
 def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
+    
     ### id de la orden
     orderid = orden["orderId"]
     simbolo = orden["symbol"]
-
+    
     ### Traer orden actualizada
     orden_act = client.futures_get_order(symbol = simbolo,
                                    orderId = orderid)
     
-    client.futures_cancel_all_open_orders(symbol = simbolo)
-
     c = 0
-    while c <= 120:
+    max_c = 180
+    while c <= max_c:
         ### Traer estado Última Orden 
         status = orden_act["status"]
 
         if status == "FILLED":
+            client.futures_cancel_all_open_orders(symbol = simbolo)
+
             ### Posición Actual
             while True:
                 try:
@@ -69,7 +71,7 @@ def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
             print("La ganancia es aproximandamente:", round(ganancia_neta,2))
             return(sl.sl_auto(client,orden_act,perdida),precio_act_tsl,aux)
         
-        elif c == 120:
+        elif c == max_c:
             print("Se cancela la orden")
             client.futures_cancel_all_open_orders(symbol = orden_act["symbol"])
             break

@@ -3,7 +3,7 @@ from binance import Client
 from datetime import datetime
 import time
 from binance.exceptions import BinanceAPIException
-import math
+import requests
 
 def compra_auto(client, simbolo, tipo, price_entry, leverage = 10, porcentaje_usdt = 1):
     ### simbolo: moneda
@@ -11,9 +11,6 @@ def compra_auto(client, simbolo, tipo, price_entry, leverage = 10, porcentaje_us
     ### leverage: apalancamiento
     ### price_entry: precio entrada
     ### porcentaje_usdt: cantidad del todal de usdt colocar en la posición
-
-    ### Cancela cualquier orden abierta
-    client.futures_cancel_all_open_orders(symbol = simbolo)
     
     ### Traer Balance USDT de la cuenta
     while True:
@@ -32,7 +29,7 @@ def compra_auto(client, simbolo, tipo, price_entry, leverage = 10, porcentaje_us
             time.sleep(0.2)
 
     ### Orden Operación
-    total_usdt = (round(float(target["balance"]),2) - 0.01)*porcentaje_usdt
+    total_usdt = (round(float(target["balance"]),2)*0.97)*porcentaje_usdt
     cantidad_monedas = round((total_usdt*leverage/price_entry)//1)
 
     ### Modificar palanca 

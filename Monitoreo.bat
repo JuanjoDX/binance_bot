@@ -1,13 +1,13 @@
 @echo off
 
 :: Ruta al directorio del entorno virtual
-set "venv_path=C:\Users\Usuario\Proyectos\Bot Trading\venv"
+set "venv_path=.\venv"
 
 :: Activa el entorno virtual
 call "%venv_path%\Scripts\activate"
 
 :: Ruta al archivo Python que deseas ejecutar
-set "python_script=C:\Users\Usuario\Proyectos\Bot Trading\src\Monitoreo\Monitoreo_pos_act.py"
+set "python_script=.\src\Monitoreo\Monitoreo_pos_act.py"
 
 :: Ejecuta el programa de Python
 python "%python_script%"

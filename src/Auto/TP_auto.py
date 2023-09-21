@@ -30,6 +30,7 @@ def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
                     break
                 except BinanceAPIException as e:
                     # Espera 0.2 segundos antes de intentar nuevamente
+                    print(e)
                     time.sleep(0.2)
 
             ### TP Limit Según lado
@@ -60,6 +61,7 @@ def tp_auto(client,orden,ganancia,perdida,porcentaje_ts):
                     break
                 except BinanceAPIException as e:
                     # Espera 0.2 segundos antes de intentar nuevamente
+                    print(e)
                     time.sleep(0.2)
 
             ### Imprimir Ganancia

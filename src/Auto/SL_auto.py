@@ -12,6 +12,7 @@ def sl_auto(client,orden,perdida):
             break
         except BinanceAPIException as e:
             # Espera 0.2 segundos antes de intentar nuevamente
+            print(e)
             time.sleep(0.2)
 
     ### TP Limit Según lado

@@ -47,6 +47,7 @@ def tsl_auto(client,orden,orden_sl,porcentaje_retorno):
                 precio_actual = client.futures_ticker(symbol = orden_act["symbol"])["lastPrice"]
             except BinanceAPIException as e:
                 # Espera 0.2 segundos antes de intentar nuevamente
+                print(e)
                 time.sleep(0.2)
             
             ### Precio Limit Según lado
